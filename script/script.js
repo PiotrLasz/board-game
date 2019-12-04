@@ -63,13 +63,15 @@ $(document).ready(function() {
 
         function addElements() {
 
-            let allTiles = document.getElementsByTagName('td');
-
             function randomTile() {
-                return Math.floor(Math.random()*allTiles.length);
+
+                return Math.floor(Math.random()*tableArray.length);
+
             }
+
+            let numberOfWalls = randomIntInRange(5, 8);
             
-            for (let i=0; i<5; i++) {
+            for (let i=0; i<numberOfWalls; i++) {
 
                 let x = randomTile();
                 
@@ -85,33 +87,17 @@ $(document).ready(function() {
 
             }
 
-            for (let j=0; j<5; j++) {
+            for (let j=0; j<2; j++) {
 
                 let y = randomTile();
 
-                if ($('td').eq(y).hasClass('Wall') || $('td').eq(y).hasClass('Cash')) {
+                if($('td').eq(y).hasClass('Wall')) {
 
                     j -= 1;
 
                 } else {
 
-                    $('td').eq(y).replaceWith('<td class="Cash">£60</td>');
-
-                }
-
-            }
-
-            for (let k=0; k<1; k++) {
-
-                let z = randomTile();
-
-                if($('td').eq(z).hasClass('Wall') || $('td').eq(z).hasClass('Cash')) {
-
-                    k -= 1;
-
-                } else {
-
-                    $('td').eq(z).replaceWith('<td class="Player">O_O</td>');
+                    $('td').eq(y).replaceWith('<td class="Player">O_O</td>');
 
                 }
 
