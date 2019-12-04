@@ -1,0 +1,25 @@
+th, td {
+
+    width: 100px;
+    height: 100px;
+    text-align: center;
+
+}
+
+.Wall {
+
+    background-color: #10361a;
+
+}
+
+.Cash {
+
+    background-color: #d7da4a;
+
+}
+
+.Player {
+
+    background-color: #a1f09a;
+
+}
