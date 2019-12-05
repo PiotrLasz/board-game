@@ -4,9 +4,9 @@ $(document).ready(function() {
 
     const Tile = class {
 
-        constructor (isBlocked, row, column) {
+        constructor (row, column) {
 
-            this.isBlocked = isBlocked;
+            this.isBlocked = false;
             this.row = row;
             this.column = column;
 
@@ -30,74 +30,62 @@ $(document).ready(function() {
 
         // creating table board
 
-        let rows = randomIntInRange(5, 8);
-        let columns = randomIntInRange(5, 8);
-        let table = '<table class="GameBoard" border="1">';
+        function tableBoard () {
 
-        for (let i=0; i<rows; i++) {
+            let rows = randomIntInRange(5, 8);
+            let columns = randomIntInRange(5, 8);
+            let table = '<table class="GameBoard" border="1">';
 
-            table += '<tr>';
+            for (let i=0; i<rows; i++) {
 
-            for (let j=0; j<columns; j++) {
+                table += '<tr>';
 
-                // adding a Tile object to the array
-                tableArray.push(new Tile(false, i, j));
+                for (let j=0; j<columns; j++) {
 
-                table +='<td>';
-                table +='R:' + i + ' C:' + j;
-                table +='</td>';
+                    // adding a Tile object to the array
+                    tableArray.push(new Tile(i, j));
+
+                    table +='<td>';
+                    table +='R:' + i + ' C:' + j;
+                    table +='</td>';
+
+                }
+
+                table += '</tr>';
 
             }
 
-            table += '</tr>';
+            table +='</table>';
 
-        }
+            return table;
 
-        table +='</table>';
+        };
 
         // adding table board to DOM
 
-        $('.Board').html(table);
+        $('.Board').html(tableBoard());
 
-        // adding elements to board
+        // adding blocked tiles to board
 
-        function addElements() {
-
-            function randomTile() {
-
-                return Math.floor(Math.random()*tableArray.length);
-
-            }
+        function addBlockedTiles() {
 
             let numberOfWalls = randomIntInRange(5, 8);
             
             for (let i=0; i<numberOfWalls; i++) {
 
-                let x = randomTile();
+                let randomTilesToBlock = randomIntInRange(0, tableArray.length);
                 
-                if ($('td').eq(x).hasClass('Wall')) {
+                if ($('td').eq(randomTilesToBlock).hasClass('Wall')) {
 
                     i -= 1;
 
                 } else {
 
-                    $('td').eq(x).addClass('Wall');
+                    //Sticking a CSS class of wall to blocked tile
+                    $('td').eq(randomTilesToBlock).addClass('Wall');
 
-                }
-
-            }
-
-            for (let j=0; j<2; j++) {
-
-                let y = randomTile();
-
-                if($('td').eq(y).hasClass('Wall')) {
-
-                    j -= 1;
-
-                } else {
-
-                    $('td').eq(y).replaceWith('<td class="Player">O_O</td>');
+                    //Changing Tile objects saved in tableArray property 'isBlocked' to true
+                    tableArray[randomTilesToBlock].isBlocked = true;
 
                 }
 
@@ -105,7 +93,28 @@ $(document).ready(function() {
 
         };
 
-        addElements();
+        function addPlayer1() {
+
+            for (let i=0; i<1; i++) {
+
+                let randomSpotForPlayer = randomIntInRange(0, tableArray.length);
+
+                if($('td').eq(randomSpotForPlayer).hasClass('Wall')) {
+
+                    i -= 1;
+
+                } else {
+
+                    $('td').eq(randomSpotForPlayer).replaceWith('<td class="Player">O_O</td>');
+
+                }
+
+            }
+
+        };
+
+        addBlockedTiles();
+        addPlayer1();
 
     });
 
