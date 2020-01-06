@@ -73,7 +73,7 @@ $(document).ready(function() {
             
             for (let i=0; i<numberOfWalls; i++) {
 
-                let randomTilesToBlock = randomIntInRange(0, tableArray.length);
+                let randomTilesToBlock = randomIntInRange(0, tableArray.length-1);
                 
                 if ($('td').eq(randomTilesToBlock).hasClass('Wall')) {
 
